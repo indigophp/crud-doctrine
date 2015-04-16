@@ -1,0 +1,5 @@
+suites:
+  doctrine_suite:
+    namespace: Indigo\Crud\Doctrine
+    psr4_prefix: Indigo\Crud\Doctrine
+formatter.name: pretty
