@@ -11,17 +11,21 @@
 
 namespace Indigo\Crud\Doctrine\CommandHandler;
 
+use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Indigo\Hydra\Hydrator;
-use Indigo\Crud\Command\UpdateEntity;
+use Indigo\Crud\Command\Create;
 
 /**
- * Handles entity update
- *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class EntityUpdater
+class Creator
 {
+    /**
+     * @var InstantiatorInterface
+     */
+    protected $instantiator;
+
     /**
      * @var Hydrator
      */
@@ -33,23 +37,26 @@ class EntityUpdater
     protected $em;
 
     /**
+     * @param InstantiatorInterface  $instantiator
      * @param Hydrator               $hydrator
      * @param EntityManagerInterface $em
      */
-    public function __construct(Hydrator $hydrator, EntityManagerInterface $em)
+    public function __construct(InstantiatorInterface $instantiator, Hydrator $hydrator, EntityManagerInterface $em)
     {
+        $this->instantiator = $instantiator;
         $this->hydrator = $hydrator;
         $this->em = $em;
     }
 
     /**
-     * Updates an entity
+     * Creates a new entity
      *
-     * @param UpdateEntity $command
+     * @param Create $command
      */
-    public function handle(UpdateEntity $command)
+    public function handle(Create $command)
     {
-        $entity = $command->getEntity();
+        $entityClass = $command->getEntityClass();
+        $entity = $this->instantiator->instantiate($entityClass);
         $data = $command->getData();
 
         // UGLY WORKAROUND BEGINS
@@ -58,6 +65,7 @@ class EntityUpdater
 
         $this->hydrator->hydrate($entity, $data);
 
+        $this->em->persist($entity);
         $this->em->flush();
     }
 }

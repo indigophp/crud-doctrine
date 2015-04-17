@@ -12,14 +12,14 @@
 namespace Indigo\Crud\Doctrine\QueryHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Indigo\Crud\Query\FindEntity;
+use Indigo\Crud\Query\Find;
 
 /**
  * Handles entity searching
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class EntityFinder
+class Finder
 {
     /**
      * @var EntityManagerInterface
@@ -37,11 +37,11 @@ class EntityFinder
     /**
      * Returns an entity
      *
-     * @param FindEntity $query
+     * @param Find $query
      *
      * @return object|null
      */
-    public function handle(FindEntity $query)
+    public function handle(Find $query)
     {
         $entityClass = $query->getEntityClass();
         $id = $query->getId();

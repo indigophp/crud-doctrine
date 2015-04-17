@@ -12,14 +12,12 @@
 namespace Indigo\Crud\Doctrine\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Indigo\Crud\Command\SaveEntity;
+use Indigo\Crud\Command\Delete;
 
 /**
- * Handles entity save
- *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class EntitySaver
+class Remover
 {
     /**
      * @var EntityManagerInterface
@@ -35,12 +33,15 @@ class EntitySaver
     }
 
     /**
-     * Saves an entity
+     * Removes an entity
      *
-     * @param UpdateEntity $command
+     * @param Delete $command
      */
-    public function handle(SaveEntity $command)
+    public function handle(Delete $command)
     {
+        $entity = $command->getEntity();
+
+        $this->em->remove($entity);
         $this->em->flush();
     }
 }

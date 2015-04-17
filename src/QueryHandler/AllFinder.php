@@ -12,14 +12,12 @@
 namespace Indigo\Crud\Doctrine\QueryHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Indigo\Crud\Query\FindAllEntities;
+use Indigo\Crud\Query\FindAll;
 
 /**
- * Handles all entities fetching
- *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class AllEntityFinder
+class AllFinder
 {
     /**
      * @var EntityManagerInterface
@@ -37,11 +35,11 @@ class AllEntityFinder
     /**
      * Returns an entity
      *
-     * @param FindAllEntities $query
+     * @param FindAll $query
      *
      * @return object|null
      */
-    public function handle(FindAllEntities $query)
+    public function handle(FindAll $query)
     {
         $entityClass = $query->getEntityClass();
 

@@ -4,11 +4,11 @@ namespace spec\Indigo\Crud\Doctrine\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Indigo\Hydra\Hydrator;
-use Indigo\Crud\Command\UpdateEntity;
+use Indigo\Crud\Command\Update;
 use Indigo\Crud\Stub\Entity;
 use PhpSpec\ObjectBehavior;
 
-class EntityUpdaterSpec extends ObjectBehavior
+class UpdaterSpec extends ObjectBehavior
 {
     function let(Hydrator $hydra, EntityManagerInterface $em)
     {
@@ -17,10 +17,10 @@ class EntityUpdaterSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Indigo\Crud\Doctrine\CommandHandler\EntityUpdater');
+        $this->shouldHaveType('Indigo\Crud\Doctrine\CommandHandler\Updater');
     }
 
-    function it_handles_an_update_command(Entity $entity, UpdateEntity $command, Hydrator $hydra, EntityManagerInterface $em)
+    function it_handles_an_update_command(Entity $entity, Update $command, Hydrator $hydra, EntityManagerInterface $em)
     {
         $data = ['data' => 'atad'];
 

@@ -4,10 +4,10 @@ namespace spec\Indigo\Crud\Doctrine\QueryHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Indigo\Crud\Query\FindAllEntities;
+use Indigo\Crud\Query\Find;
 use PhpSpec\ObjectBehavior;
 
-class AllEntityFinderSpec extends ObjectBehavior
+class FinderSpec extends ObjectBehavior
 {
     function let(EntityManagerInterface $em)
     {
@@ -16,14 +16,15 @@ class AllEntityFinderSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Indigo\Crud\Doctrine\QueryHandler\AllEntityFinder');
+        $this->shouldHaveType('Indigo\Crud\Doctrine\QueryHandler\Finder');
     }
 
-    function it_handles_a_find_all_query(FindAllEntities $query, EntityRepository $repository, EntityManagerInterface $em)
+    function it_handles_a_find_query(Find $query, EntityRepository $repository, EntityManagerInterface $em)
     {
         $query->getEntityClass()->willReturn('Indigo\Crud\Stub\Entity');
+        $query->getId()->willReturn(1);
 
-        $repository->findAll()->shouldBeCalled();
+        $repository->find(1)->shouldBeCalled();
 
         $em->getRepository('Indigo\Crud\Stub\Entity')->willReturn($repository);
 

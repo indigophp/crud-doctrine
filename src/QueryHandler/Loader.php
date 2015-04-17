@@ -13,14 +13,12 @@ namespace Indigo\Crud\Doctrine\QueryHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Indigo\Hydra\Hydrator;
-use Indigo\Crud\Query\LoadEntity;
+use Indigo\Crud\Query\Load;
 
 /**
- * Handles entity loading
- *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class EntityLoader
+class Loader
 {
     /**
      * @var EntityManagerInterface
@@ -45,11 +43,11 @@ class EntityLoader
     /**
      * Returns an entity's data
      *
-     * @param LoadEntity $query
+     * @param Load $query
      *
      * @return array|null
      */
-    public function handle(LoadEntity $query)
+    public function handle(Load $query)
     {
         $entityClass = $query->getEntityClass();
         $id = $query->getId();

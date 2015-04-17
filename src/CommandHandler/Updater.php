@@ -12,38 +12,50 @@
 namespace Indigo\Crud\Doctrine\CommandHandler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Indigo\Crud\Command\DeleteEntity;
+use Indigo\Hydra\Hydrator;
+use Indigo\Crud\Command\Update;
 
 /**
- * Handles entity removal
- *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-class EntityRemover
+class Updater
 {
+    /**
+     * @var Hydrator
+     */
+    protected $hydrator;
+
     /**
      * @var EntityManagerInterface
      */
     protected $em;
 
     /**
+     * @param Hydrator               $hydrator
      * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(Hydrator $hydrator, EntityManagerInterface $em)
     {
+        $this->hydrator = $hydrator;
         $this->em = $em;
     }
 
     /**
-     * Removes an entity
+     * Updates an entity
      *
-     * @param DeleteEntity $command
+     * @param Update $command
      */
-    public function handle(DeleteEntity $command)
+    public function handle(Update $command)
     {
         $entity = $command->getEntity();
+        $data = $command->getData();
 
-        $this->em->remove($entity);
+        // UGLY WORKAROUND BEGINS
+        $data = array_merge($this->hydrator->extract($entity), $data);
+        // UGLY WORKAROUND ENDS
+
+        $this->hydrator->hydrate($entity, $data);
+
         $this->em->flush();
     }
 }

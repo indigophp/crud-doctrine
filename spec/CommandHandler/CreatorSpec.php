@@ -5,11 +5,11 @@ namespace spec\Indigo\Crud\Doctrine\CommandHandler;
 use Doctrine\Instantiator\InstantiatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Indigo\Hydra\Hydrator;
-use Indigo\Crud\Command\CreateEntity;
+use Indigo\Crud\Command\Create;
 use Indigo\Crud\Stub\Entity;
 use PhpSpec\ObjectBehavior;
 
-class EntityCreatorSpec extends ObjectBehavior
+class CreatorSpec extends ObjectBehavior
 {
     function let(InstantiatorInterface $instantiator, Hydrator $hydra, EntityManagerInterface $em)
     {
@@ -18,10 +18,10 @@ class EntityCreatorSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Indigo\Crud\Doctrine\CommandHandler\EntityCreator');
+        $this->shouldHaveType('Indigo\Crud\Doctrine\CommandHandler\Creator');
     }
 
-    function it_handles_a_create_command(Entity $entity, CreateEntity $command, InstantiatorInterface $instantiator, Hydrator $hydra, EntityManagerInterface $em)
+    function it_handles_a_create_command(Entity $entity, Create $command, InstantiatorInterface $instantiator, Hydrator $hydra, EntityManagerInterface $em)
     {
         $entityClass = 'Indigo\Crud\Stub\Entity';
         $data = [
